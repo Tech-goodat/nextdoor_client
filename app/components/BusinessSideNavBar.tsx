@@ -133,7 +133,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/business/profile"
+              href="/my_business/profile"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-lime-50 hover:text-lime-700"
             >
               <Store size={18} />

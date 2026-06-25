@@ -36,6 +36,7 @@ const Page = () => {
       );
 
       const data = await response.json();
+      console.log(data)
 
       if (!response.ok) {
         alert(data.detail || "Login failed");
@@ -51,7 +52,7 @@ const Page = () => {
         );
       }
 
-      router.push("/client/home");
+      router.push("/client/home")
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
+
 import {
   Building2,
   Phone,
@@ -9,6 +10,7 @@ import {
   Clock,
   CheckCircle2,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Convert = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ const Convert = () => {
     phone_number: "",
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -39,10 +42,12 @@ const Convert = () => {
     e.preventDefault();
 
     const token = localStorage.getItem("token");
+    console.log('my access_token.......................', token)
+    
 
     try {
       const response = await fetch(
-        "https://nextdoor-server.onrender.com/business/create/",
+        "https://nextdoor-server.onrender.com/business/",
         {
           method: "POST",
           headers: {
@@ -62,14 +67,18 @@ const Convert = () => {
       }
 
       setShowSuccess(true);
+      router.push('/my_business/dashboard')
     } catch (error) {
       console.log(error);
       alert("Something went wrong.");
     }
+      
   };
 
+  
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-orange-50 to-lime-50 px-4 py-8">
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50 to-lime-50 px-4 py-8">
       <div className="mx-auto w-full max-w-3xl">
 
         <div className="rounded-3xl border border-white/50 bg-white/80 p-6 shadow-xl backdrop-blur-md sm:p-8">
@@ -296,7 +305,7 @@ const Convert = () => {
     <div className="mx-4 w-full max-w-md animate-in zoom-in-95 duration-300 rounded-3xl border border-white/50 bg-white p-8 shadow-2xl">
 
       <div className="flex justify-center">
-        <div className="flex h-20 w-20 animate-pulse items-center justify-center rounded-full bg-gradient-to-r from-orange-100 to-lime-100">
+        <div className="flex h-20 w-20 animate-pulse items-center justify-center rounded-full bg-linear-to-r from-orange-100 to-lime-100">
           <CheckCircle2
             size={48}
             className="text-lime-600"
