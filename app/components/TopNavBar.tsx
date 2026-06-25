@@ -58,7 +58,6 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
       <div className="flex items-center justify-between px-4 py-4 sm:px-6">
         {/* Left Side */}
         <div className="flex items-center gap-3">
-          {/* Mobile Menu Button */}
           <button
             onClick={onMenuClick}
             className="rounded-lg p-2 transition hover:bg-gray-100 lg:hidden"
@@ -80,45 +79,59 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
         {/* Profile Dropdown */}
         <div
           className="relative"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
+          onMouseEnter={() => {
+            if (window.innerWidth >= 1024) setOpen(true);
+          }}
+          onMouseLeave={() => {
+            if (window.innerWidth >= 1024) setOpen(false);
+          }}
         >
-          <button className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-gray-400 text-xl font-semibold text-white shadow-md transition-all duration-300 hover:scale-105">
+          <button
+            onClick={() => setOpen((prev) => !prev)}
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-gray-400 text-xl font-semibold text-white shadow-md transition-all duration-300 hover:scale-105"
+          >
             {user?.first_name?.charAt(0).toUpperCase()}
           </button>
 
           {open && (
-            <div className="absolute right-0 top-12 min-w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
-              {/* User Info */}
-              <div className="bg-gradient-to-r from-orange-50 to-lime-50 px-4 py-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 font-semibold text-white">
-                    {user?.first_name?.charAt(0).toUpperCase()}
-                    {user?.last_name?.charAt(0).toUpperCase()}
-                  </div>
+            <>
+              {/* Mobile Backdrop */}
+              <div
+                className="fixed inset-0 z-40 lg:hidden"
+                onClick={() => setOpen(false)}
+              />
 
-                  <div>
-                    <p className="font-semibold text-gray-800">
-                      {user?.first_name} {user?.last_name}
-                    </p>
+              {/* Dropdown */}
+              <div className="absolute right-0 top-12 z-50 min-w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
+                <div className="bg-gradient-to-r from-orange-50 to-lime-50 px-4 py-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 font-semibold text-white">
+                      {user?.first_name?.charAt(0).toUpperCase()}
+                      {user?.last_name?.charAt(0).toUpperCase()}
+                    </div>
 
-                    <p className="text-xs text-gray-500">
-                      {user?.email}
-                    </p>
+                    <div>
+                      <p className="font-semibold text-gray-800">
+                        {user?.first_name} {user?.last_name}
+                      </p>
+
+                      <p className="text-xs text-gray-500">
+                        {user?.email}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Logout */}
-              <div className="p-2">
-                <button
-                  onClick={handleLogout}
-                  className="w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-red-500 transition hover:bg-red-50"
-                >
-                  Log Out
-                </button>
+                <div className="p-2">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-red-500 transition hover:bg-red-50"
+                  >
+                    Log Out
+                  </button>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
@@ -141,5 +154,4 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
     </header>
   );
 };
-
 export default TopNavBar;
