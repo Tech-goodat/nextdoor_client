@@ -18,11 +18,11 @@ import { useRouter } from "next/navigation";
 const Page = () => {
   const router = useRouter();
 
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [houseNumber, setHouseNumber] = useState("");
-  const [estate, setEstate] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -50,11 +50,10 @@ const Page = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            full_name: fullName,
+            first_name: firstName,
             phone_number: phoneNumber,
             email,
             house_number: houseNumber,
-            estate,
             password,
             confirm_password: confirmPassword,
           }),
@@ -164,7 +163,7 @@ const Page = () => {
               {/* Full Name */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-800">
-                  Full Name
+                  First Name
                 </label>
 
                 <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors focus-within:border-orange-400">
@@ -176,11 +175,34 @@ const Page = () => {
                   <input
                     type="text"
                     required
-                    value={fullName}
+                    value={firstName}
                     onChange={(e) =>
-                      setFullName(e.target.value)
+                      setFirstName(e.target.value)
                     }
-                    placeholder="James Kamau"
+                    placeholder="Felix"
+                    className="w-full bg-transparent text-gray-800 outline-none placeholder:text-gray-400"
+                  />
+                </div>
+              </div>
+               <div>
+                <label className="mb-2 block text-sm font-medium text-gray-800">
+                  Last Name
+                </label>
+
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors focus-within:border-orange-400">
+                  <User
+                    size={18}
+                    className="text-gray-500"
+                  />
+
+                  <input
+                    type="text"
+                    required
+                    value={lastName}
+                    onChange={(e) =>
+                      setLastName(e.target.value)
+                    }
+                    placeholder="Kiprotich"
                     className="w-full bg-transparent text-gray-800 outline-none placeholder:text-gray-400"
                   />
                 </div>
@@ -214,7 +236,7 @@ const Page = () => {
               {/* Email */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-800">
-                  Email (Optional)
+                  Email
                 </label>
 
                 <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors focus-within:border-orange-400">
@@ -229,7 +251,7 @@ const Page = () => {
                     onChange={(e) =>
                       setEmail(e.target.value)
                     }
-                    placeholder="james@example.com"
+                    placeholder="felix@example.com"
                     className="w-full bg-transparent text-gray-800 outline-none placeholder:text-gray-400"
                   />
                 </div>
@@ -254,32 +276,7 @@ const Page = () => {
                     onChange={(e) =>
                       setHouseNumber(e.target.value)
                     }
-                    placeholder="e.g. House 14B, Block C"
-                    className="w-full bg-transparent text-gray-800 outline-none placeholder:text-gray-400"
-                  />
-                </div>
-              </div>
-
-              {/* Estate */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-800">
-                  Estate
-                </label>
-
-                <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors focus-within:border-orange-400">
-                  <MapPin
-                    size={18}
-                    className="text-gray-500"
-                  />
-
-                  <input
-                    type="text"
-                    required
-                    value={estate}
-                    onChange={(e) =>
-                      setEstate(e.target.value)
-                    }
-                    placeholder="Greenwood Estate"
+                    placeholder="e.g. RS3-A708/ Not resident"
                     className="w-full bg-transparent text-gray-800 outline-none placeholder:text-gray-400"
                   />
                 </div>
