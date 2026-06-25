@@ -1,5 +1,6 @@
+'use client'
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Home,
   ShoppingBag,
@@ -12,8 +13,42 @@ import {
   ClipboardList,
   CreditCard,
 } from "lucide-react";
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  house_number:string
+  email: string;
+}
+
 
 const BusinessSideNavBar = () => {
+  const [user, setUser] = useState<User | null>(null);
+  
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+  
+      try {
+        const response = await fetch(
+          "https://nextdoor-server.onrender.com/users/client/me/",
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+  
+       const data: User = await response.json();
+  setUser(data);
+        console.log('user.............................', data)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchUser();
+  }, []);
   return (
     <aside className="flex h-screen w-50 flex-col border-r border-white/50 bg-white/80 backdrop-blur-md shadow-lg">
       {/* Logo */}
@@ -39,7 +74,7 @@ const BusinessSideNavBar = () => {
 
           <div className="space-y-1">
             <Link
-              href="/client/home"
+              href="/my_business/home"
               className="flex items-center gap-3 rounded-xl bg-orange-50 px-4 py-3 text-sm font-semibold text-orange-600 transition-all duration-200"
             >
               <Home size={18} />
@@ -47,7 +82,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/client/orders"
+              href="/my_business/my_orders"
               className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-orange-50 hover:text-orange-600"
             >
               <div className="flex items-center gap-3">
@@ -61,7 +96,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/client/notifications"
+              href="/my_business/notifications"
               className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-orange-50 hover:text-orange-600"
             >
               <div className="flex items-center gap-3">
@@ -75,7 +110,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/client/cart"
+              href="/my_business/cart"
               className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-orange-50 hover:text-orange-600"
             >
               <div className="flex items-center gap-3">
@@ -88,13 +123,6 @@ const BusinessSideNavBar = () => {
               </span>
             </Link>
 
-            <Link
-              href="/client/profile"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-orange-50 hover:text-orange-600"
-            >
-              <User size={18} />
-              Profile
-            </Link>
           </div>
         </div>
 
@@ -109,7 +137,7 @@ const BusinessSideNavBar = () => {
 
           <div className="space-y-1">
             <Link
-              href="/business/dashboard"
+              href="/my_business/dashboard"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-lime-50 hover:text-lime-700"
             >
               <LayoutDashboard size={18} />
@@ -117,7 +145,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/business/products"
+              href="/my_business/products"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-lime-50 hover:text-lime-700"
             >
               <Package size={18} />
@@ -125,7 +153,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/business/orders"
+              href="/my_business/orders"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-lime-50 hover:text-lime-700"
             >
               <ClipboardList size={18} />
@@ -141,7 +169,7 @@ const BusinessSideNavBar = () => {
             </Link>
 
             <Link
-              href="/business/billing"
+              href="/my_business/billing"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-lime-50 hover:text-lime-700"
             >
               <CreditCard size={18} />
@@ -155,16 +183,16 @@ const BusinessSideNavBar = () => {
       <div className="border-t border-gray-100 p-4">
         <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-50 to-lime-50 p-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 font-bold text-white">
-            JK
+            {user?.first_name?.charAt(0).toUpperCase()}
           </div>
 
           <div>
             <p className="font-semibold text-gray-800">
-              James Kamau
+              {user?.first_name}
             </p>
 
             <p className="text-xs text-gray-500">
-              House 14B, Block C
+              {user?.house_number}
             </p>
           </div>
         </div>

@@ -40,7 +40,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        "https://nextdoor-server.onrender.com/business/",
+        "https://nextdoor-server.onrender.com/business/my-business/",
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -101,7 +101,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `https://nextdoor-server.onrender.com/business/${businessId}/`,
+        `https://nextdoor-server.onrender.com/business/my-business/`,
         {
           method: "PATCH",
           headers: {

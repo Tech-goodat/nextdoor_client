@@ -67,7 +67,7 @@ const Convert = () => {
       }
 
       setShowSuccess(true);
-      router.push('/my_business/dashboard')
+      router.push('/my_business/home')
     } catch (error) {
       console.log(error);
       alert("Something went wrong.");

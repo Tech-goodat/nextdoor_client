@@ -45,14 +45,34 @@ const Page = () => {
 
       localStorage.setItem("token", data.token);
 
-      if (data.user) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify(data.user)
-        );
-      }
+if (data.user) {
+  localStorage.setItem(
+    "user",
+    JSON.stringify(data.user)
+  );
+}
 
-      router.push("/client/home")
+try {
+  const businessResponse = await fetch(
+    "https://nextdoor-server.onrender.com/business/my-business/",
+    {
+      headers: {
+        Authorization: `Token ${data.token}`,
+      },
+    }
+  );
+
+  if (businessResponse.ok) {
+    router.push("/client/home");
+  } else {
+    router.push("/my_business/home");
+  }
+} catch (error) {
+  console.error(error);
+
+  // Fallback
+  router.push("/client/home");
+}
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
@@ -62,7 +82,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-white via-orange-50 to-lime-50">
+    <div className="min-h-screen w-full bg-linear-to-br from-white via-orange-50 to-lime-50">
       <div className="flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
         <div className="w-full max-w-md">
           <Link

@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import SideNavBar from "../components/ClientSideNavBar";
+import SmallClientSideNav from "../components/SmallClientSideNav";
 import TopNavBar from "../components/TopNavBar";
 
 interface LayoutProps {
@@ -7,29 +10,48 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-white via-orange-50 to-lime-50">
-
-      {/* Fixed Sidebar */}
+      {/* Desktop Sidebar */}
       <aside className="fixed left-0 top-0 z-50 hidden h-screen w-60 lg:block">
         <SideNavBar />
       </aside>
 
+      {/* Mobile Sidebar */}
+      {sidebarOpen && (
+        <>
+          {/* Dark Backdrop */}
+          <div
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+          />
+
+          {/* Drawer */}
+          <div className="fixed left-0 top-0 z-50 lg:hidden">
+            <SmallClientSideNav
+              onClose={() => setSidebarOpen(false)}
+            />
+          </div>
+        </>
+      )}
+
       {/* Main Area */}
       <div className="lg:ml-60">
-
-        {/* Fixed Top Navbar */}
+        {/* Top Navbar */}
         <div className="fixed top-0 right-0 left-0 z-40 lg:left-60">
-          <TopNavBar />
+          <TopNavBar
+            onMenuClick={() => setSidebarOpen(true)}
+          />
         </div>
 
-        {/* Scrollable Content */}
-        <main className="h-screen overflow-y-auto pt-32 px-4 pb-8 sm:px-6 lg:px-8">
+        {/* Page Content */}
+        <main className="h-screen overflow-y-auto px-4 pt-32 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             {children}
           </div>
         </main>
-
       </div>
     </div>
   );

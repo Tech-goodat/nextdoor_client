@@ -1,5 +1,6 @@
+'use client'
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Home,
   ShoppingBag,
@@ -7,8 +8,45 @@ import {
   ShoppingCart,
   User,
 } from "lucide-react";
+import { data } from "framer-motion/client";
+
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  house_number:string
+  email: string;
+}
+
 
 const SideNavBar = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+useEffect(() => {
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(
+        "https://nextdoor-server.onrender.com/users/client/me/",
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+     const data: User = await response.json();
+setUser(data);
+      console.log('user.............................', data)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchUser();
+}, []);
+
   return (
     <aside className="flex h-screen w-60 flex-col border-r border-white/50 bg-white/80 backdrop-blur-md shadow-lg">
       {/* Logo */}
@@ -107,17 +145,17 @@ const SideNavBar = () => {
       {/* User Card */}
       <div className="border-t border-gray-100 p-4">
         <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-50 to-lime-50 p-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
-            JK
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-lg font-semibold text-white">
+            {user?.first_name?.charAt(0).toUpperCase()}
           </div>
 
           <div>
             <p className="font-semibold text-gray-800">
-              James Kamau
+              {user?.first_name}
             </p>
 
             <p className="text-xs text-gray-500">
-              House 14B, Block C
+              {user?.house_number}
             </p>
           </div>
         </div>
