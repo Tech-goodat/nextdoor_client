@@ -43,12 +43,26 @@ const Home = () => {
 
         const data = await response.json();
 
+        console.log("Response:", data);
+        console.log("Is Array:", Array.isArray(data));
+
         if (response.ok) {
-          setBusinesses(data);
-          console.log("Businesses:", data);
+          if (Array.isArray(data)) {
+            setBusinesses(data);
+          } else {
+            console.error(
+              "Expected an array but received:",
+              data
+            );
+            setBusinesses([]);
+          }
+        } else {
+          console.error("Backend Error:", data);
+          setBusinesses([]);
         }
       } catch (error) {
-        console.log(error);
+        console.error("Fetch Error:", error);
+        setBusinesses([]);
       } finally {
         setLoading(false);
       }
@@ -60,7 +74,9 @@ const Home = () => {
   const categories = useMemo(() => {
     const uniqueCategories = [
       ...new Set(
-        businesses.map((business) => business.business_type)
+        businesses
+          .map((business) => business.business_type)
+          .filter(Boolean)
       ),
     ];
 
@@ -70,10 +86,10 @@ const Home = () => {
   const filteredBusinesses = businesses.filter((business) => {
     const matchesSearch =
       business.business_name
-        .toLowerCase()
+        ?.toLowerCase()
         .includes(search.toLowerCase()) ||
       business.description
-        .toLowerCase()
+        ?.toLowerCase()
         .includes(search.toLowerCase());
 
     const matchesCategory =
@@ -97,23 +113,21 @@ const Home = () => {
           placeholder="Search businesses..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-white border border-gray-300 rounded-full py-3 pl-12 pr-4 outline-none focus:ring-2 focus:ring-lime-400"
+          className="w-full rounded-full border border-gray-300 bg-white py-3 pr-4 pl-12 outline-none focus:ring-2 focus:ring-lime-400"
         />
       </div>
 
       {/* Categories */}
-      <div className="flex gap-3 overflow-x-auto pb-2 mb-8">
+      <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-5 py-2 rounded-full text-sm text-gray-700 border whitespace-nowrap transition
-              ${
-                selectedCategory === category
-                  ? "bg-lime-400 border-lime-400 text-black"
-                  : "bg-white border-gray-200"
-              }
-            `}
+            className={`whitespace-nowrap rounded-full border px-5 py-2 text-sm text-gray-700 transition ${
+              selectedCategory === category
+                ? "border-lime-400 bg-lime-400 text-black"
+                : "border-gray-200 bg-white"
+            }`}
           >
             {category}
           </button>
@@ -121,18 +135,17 @@ const Home = () => {
       </div>
 
       {/* Count */}
-      <p className="text-gray-600 font-medium mb-6 text-sm uppercase tracking-wide">
+      <p className="mb-6 text-sm font-medium uppercase tracking-wide text-gray-600">
         {filteredBusinesses.length} Businesses Found
       </p>
 
       {/* Loading */}
       {loading ? (
-        <div className="text-center py-20">
+        <div className="py-20 text-center">
           Loading businesses...
         </div>
       ) : filteredBusinesses.length === 0 ? (
-        <div className="text-center  py-20 text-gray-500">
-          
+        <div className="py-20 text-center text-gray-500">
           No businesses found.
         </div>
       ) : (
@@ -140,29 +153,27 @@ const Home = () => {
           {filteredBusinesses.map((business) => (
             <div
               key={business.id}
-              className="bg-white border border-gray-200 rounded-3xl py-3 px-5 flex items-center justify-between hover:shadow-md transition"
+              className="flex items-center justify-between rounded-3xl border border-gray-200 bg-white px-5 py-3 transition hover:shadow-md"
             >
               <div className="flex gap-4">
-                {/* Icon */}
-                <div className="w-16 h-16 rounded-2xl bg-lime-50 flex items-center justify-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-lime-50">
                   <Store
                     size={28}
                     className="text-lime-600"
                   />
                 </div>
 
-                {/* Content */}
                 <div>
-                  <h2 className="font-semibold text-md text-gray-700">
+                  <h2 className="text-md font-semibold text-gray-700">
                     {business.business_name}
                   </h2>
 
-                  <p className="text-gray-600 text-sm mt-1 line-clamp-2">
+                  <p className="mt-1 line-clamp-2 text-sm text-gray-600">
                     {business.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-3 mt-3">
-                    <span className="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
                       Open
                     </span>
 
@@ -184,7 +195,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <button className="text-gray-400 hover:text-gray-700 transition">
+              <button className="text-gray-400 transition hover:text-gray-700">
                 <ChevronRight size={28} />
               </button>
             </div>

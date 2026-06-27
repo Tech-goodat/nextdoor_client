@@ -63,9 +63,9 @@ try {
   );
 
   if (businessResponse.ok) {
-    router.push("/client/home");
-  } else {
     router.push("/my_business/home");
+  } else {
+    router.push("/client/home");
   }
 } catch (error) {
   console.error(error);

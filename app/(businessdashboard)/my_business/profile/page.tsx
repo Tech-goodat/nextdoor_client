@@ -52,8 +52,10 @@ const Profile = () => {
 
       if (response.ok && data.length > 0) {
         const business: Business = data[0];
+        
 
         setBusinessId(business.id);
+       
 
         setFormData({
           business_name: business.business_name || "",
@@ -64,6 +66,7 @@ const Profile = () => {
           opens: business.opens || "",
           closes: business.closes || "",
         });
+        
       }
     } catch (error) {
       console.log(error);

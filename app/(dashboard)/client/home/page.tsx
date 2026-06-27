@@ -43,12 +43,26 @@ const Home = () => {
 
         const data = await response.json();
 
+        console.log("Response:", data);
+        console.log("Is Array:", Array.isArray(data));
+
         if (response.ok) {
-          setBusinesses(data);
-          console.log("Businesses:", data);
+          if (Array.isArray(data)) {
+            setBusinesses(data);
+          } else {
+            console.error(
+              "Expected an array but received:",
+              data
+            );
+            setBusinesses([]);
+          }
+        } else {
+          console.error("Backend Error:", data);
+          setBusinesses([]);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        setBusinesses([]);
       } finally {
         setLoading(false);
       }
@@ -107,13 +121,11 @@ const Home = () => {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-5 py-2 rounded-full text-sm text-gray-700 border whitespace-nowrap transition
-              ${
-                selectedCategory === category
-                  ? "bg-lime-400 border-lime-400 text-black"
-                  : "bg-white border-gray-200"
-              }
-            `}
+            className={`px-5 py-2 rounded-full text-sm text-gray-700 border whitespace-nowrap transition ${
+              selectedCategory === category
+                ? "bg-lime-400 border-lime-400 text-black"
+                : "bg-white border-gray-200"
+            }`}
           >
             {category}
           </button>
@@ -131,8 +143,7 @@ const Home = () => {
           Loading businesses...
         </div>
       ) : filteredBusinesses.length === 0 ? (
-        <div className="text-center  py-20 text-gray-500">
-          
+        <div className="text-center py-20 text-gray-500">
           No businesses found.
         </div>
       ) : (
@@ -143,15 +154,10 @@ const Home = () => {
               className="bg-white border border-gray-200 rounded-3xl py-3 px-5 flex items-center justify-between hover:shadow-md transition"
             >
               <div className="flex gap-4">
-                {/* Icon */}
                 <div className="w-16 h-16 rounded-2xl bg-lime-50 flex items-center justify-center">
-                  <Store
-                    size={28}
-                    className="text-lime-600"
-                  />
+                  <Store size={28} className="text-lime-600" />
                 </div>
 
-                {/* Content */}
                 <div>
                   <h2 className="font-semibold text-md text-gray-700">
                     {business.business_name}

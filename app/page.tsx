@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
 import { MdOutlinePlaylistAddCheckCircle } from "react-icons/md";
@@ -29,19 +32,79 @@ const cards = [
 ];
 
 const Page = () => {
+  const router = useRouter();
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const token = localStorage.getItem("token");
+
+      // No token -> stay on landing page
+      if (!token) {
+        setCheckingAuth(false);
+        return;
+      }
+
+      try {
+        // Check whether user owns a business
+        const businessResponse = await fetch(
+          "https://nextdoor-server.onrender.com/business/my-business/",
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+
+        const businessData = await businessResponse.json();
+
+        // Has business
+        if (
+          businessResponse.ok &&
+          Array.isArray(businessData) &&
+          businessData.length > 0
+        ) {
+          router.replace("/my_business/home");
+          return;
+        }
+
+        // Logged in but no business
+        router.replace("/client/home");
+      } catch (error) {
+        console.error(error);
+        setCheckingAuth(false);
+      }
+    };
+
+    checkAuthentication();
+  }, [router]);
+
+  // Prevent landing page flashing before redirect
+  if (checkingAuth) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-white via-orange-50 to-lime-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
+          <p className="text-sm text-gray-500">
+            Loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-white via-orange-50 to-lime-50 overflow-hidden">
-      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2 gap-12 px-6 py-10 md:px-12 lg:px-20">
-        
+    <div className="min-h-screen w-full overflow-hidden bg-gradient-to-br from-white via-orange-50 to-lime-50">
+      <div className="grid min-h-screen grid-cols-1 gap-12 px-6 py-10 md:px-12 lg:grid-cols-2 lg:px-20">
         {/* Left Section */}
-        <div className="flex flex-col justify-center animate-[fadeIn_0.8s_ease-in-out]">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800">
+        <div className="flex animate-[fadeIn_0.8s_ease-in-out] flex-col justify-center">
+          <h1 className="text-4xl font-bold text-gray-800 md:text-5xl lg:text-6xl">
             Next
             <span className="text-orange-500">Door</span>
             <span className="text-lime-600">.</span>
           </h1>
 
-          <p className="mt-5 text-sm md:text-base font-medium text-gray-700 max-w-lg">
+          <p className="mt-5 max-w-lg text-sm font-medium text-gray-700 md:text-base">
             Your estate's marketplace. Discover, order, and support local
             businesses, all within Tsavo Estate.
           </p>
@@ -50,18 +113,7 @@ const Page = () => {
             {cards.map((card, index) => (
               <div
                 key={index}
-                className="
-                  flex items-center gap-4
-                  rounded-2xl
-                  border border-gray-100
-                  bg-white
-                  p-4
-                  shadow-sm
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:shadow-lg
-                "
+                className="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div
                   className={`flex h-12 w-12 items-center justify-center rounded-full text-2xl ${card.iconBg} ${card.iconColor}`}
@@ -85,23 +137,7 @@ const Page = () => {
 
         {/* Right Section */}
         <div className="flex items-center justify-center">
-          <div
-            className="
-              w-full
-              max-w-md
-              rounded-3xl
-              border
-              border-white/50
-              bg-white/80
-              backdrop-blur-md
-              shadow-xl
-              p-8
-              md:p-10
-              transition-all
-              duration-500
-              hover:shadow-2xl
-            "
-          >
+          <div className="w-full max-w-md rounded-3xl border border-white/50 bg-white/80 p-8 shadow-xl backdrop-blur-md transition-all duration-500 hover:shadow-2xl md:p-10">
             <h2 className="text-3xl font-bold text-gray-800">
               Get Started
             </h2>
@@ -113,39 +149,14 @@ const Page = () => {
             <div className="mt-8 flex flex-col gap-4">
               <Link
                 href="/auth/signup"
-                className="
-                  flex items-center justify-center
-                  w-full
-                  rounded-lg
-                  bg-orange-500
-                  py-3
-                  text-sm
-                  font-medium
-                  text-white
-                  transition-all
-                  duration-300
-                  hover:scale-[1.02]
-                "
+                className="flex w-full items-center justify-center rounded-lg bg-orange-500 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.02]"
               >
                 Create an account
               </Link>
 
               <Link
                 href="/auth/login"
-                className="
-                  flex items-center justify-center
-                  w-full
-                  rounded-lg
-                  border
-                  border-gray-300
-                  py-3
-                  text-sm
-                  font-medium
-                  text-gray-700
-                  transition-all
-                  duration-300
-                  hover:bg-gray-50
-                "
+                className="flex w-full items-center justify-center rounded-lg border border-gray-300 py-3 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-50"
               >
                 I already have an account
               </Link>
