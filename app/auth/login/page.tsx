@@ -6,80 +6,59 @@ import { ArrowLeft, Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const router = useRouter();
+const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
 
-  const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
+const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const response = await fetch(
-        "https://nextdoor-server.onrender.com/users/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
-
-      const data = await response.json();
-      console.log(data)
-
-      if (!response.ok) {
-        alert(data.detail || "Login failed");
-        return;
+    const response = await fetch(
+      "https://nextdoor-server.onrender.com/login/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       }
+    );
 
-      localStorage.setItem("token", data.token);
+    const data = await response.json();
+    console.log(data);
 
-if (data.user) {
-  localStorage.setItem(
-    "user",
-    JSON.stringify(data.user)
-  );
-}
-
-try {
-  const businessResponse = await fetch(
-    "https://nextdoor-server.onrender.com/business/my-business/",
-    {
-      headers: {
-        Authorization: `Token ${data.token}`,
-      },
+    if (!response.ok) {
+      alert(data.detail || "Login failed");
+      return;
     }
-  );
 
-  if (businessResponse.ok) {
-    router.push("/my_business/home");
-  } else {
-    router.push("/client/home");
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    if (data.user?.business_name) {
+      router.push("/my_business/home");
+    } else {
+      router.push("/client/home");
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong.");
+  } finally {
+    setLoading(false);
   }
-} catch (error) {
-  console.error(error);
-
-  // Fallback
-  router.push("/client/home");
-}
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
-  };
+};
 
   return (
     <div className="min-h-screen w-full bg-linear-to-br from-white via-orange-50 to-lime-50">

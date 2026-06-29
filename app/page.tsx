@@ -32,57 +32,37 @@ const cards = [
 ];
 
 const Page = () => {
-  const router = useRouter();
-  const [checkingAuth, setCheckingAuth] = useState(true);
+const router = useRouter();
+const [checkingAuth, setCheckingAuth] = useState(true);
 
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      const token = localStorage.getItem("token");
+useEffect(() => {
+  const checkAuthentication = () => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user") || "null");
 
-      // No token -> stay on landing page
-      if (!token) {
-        setCheckingAuth(false);
-        return;
-      }
+    // No token -> stay on landing page
+    if (!token) {
+      setCheckingAuth(false);
+      return;
+    }
 
-      try {
-        // Check whether user owns a business
-        const businessResponse = await fetch(
-          "https://nextdoor-server.onrender.com/business/my-business/",
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
+    // Logged in business owner
+    if (user?.business) {
+      router.replace("/my_business/home");
+      return;
+    }
 
-        const businessData = await businessResponse.json();
+    // Logged in regular client
+    router.replace("/client/home");
+  };
 
-        // Has business
-        if (
-          businessResponse.ok &&
-          Array.isArray(businessData) &&
-          businessData.length > 0
-        ) {
-          router.replace("/my_business/home");
-          return;
-        }
-
-        // Logged in but no business
-        router.replace("/client/home");
-      } catch (error) {
-        console.error(error);
-        setCheckingAuth(false);
-      }
-    };
-
-    checkAuthentication();
-  }, [router]);
+  checkAuthentication();
+}, [router]);
 
   // Prevent landing page flashing before redirect
   if (checkingAuth) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-white via-orange-50 to-lime-50">
+      <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-white via-orange-50 to-lime-50">
         <div className="flex flex-col items-center gap-4">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
           <p className="text-sm text-gray-500">
@@ -94,7 +74,7 @@ const Page = () => {
   }
 
   return (
-    <div className="min-h-screen w-full overflow-hidden bg-gradient-to-br from-white via-orange-50 to-lime-50">
+    <div className="min-h-screen w-full overflow-hidden bg-linear-to-br from-white via-orange-50 to-lime-50">
       <div className="grid min-h-screen grid-cols-1 gap-12 px-6 py-10 md:px-12 lg:grid-cols-2 lg:px-20">
         {/* Left Section */}
         <div className="flex animate-[fadeIn_0.8s_ease-in-out] flex-col justify-center">

@@ -177,6 +177,9 @@ const Convert = () => {
                 <option value="Repairs">
                   Repairs
                 </option>
+                 <option value="Art">
+                  Art
+                </option>
               </select>
             </div>
 

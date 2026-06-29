@@ -15,8 +15,10 @@ interface UserData {
   id: number;
   first_name: string;
   last_name: string;
-  house_number: string;
   email: string;
+  phone_number: string | null;
+  house_number: string;
+  business_name?: string;
 }
 
 interface SmallClientSideNavProps {
@@ -29,29 +31,17 @@ const SmallClientSideNav = ({
   const [user, setUser] = useState<UserData | null>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
 
+    if (storedUser) {
       try {
-        const response = await fetch(
-          "https://nextdoor-server.onrender.com/users/client/me/",
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
-
-        const data: UserData = await response.json();
-        setUser(data);
+        const parsedUser: UserData = JSON.parse(storedUser);
+        setUser(parsedUser);
       } catch (error) {
-        console.error(error);
+        console.error("Failed to parse user:", error);
       }
-    };
-
-    fetchUser();
+    }
   }, []);
-
   return (
     <aside className="flex h-screen w-72 flex-col bg-white shadow-2xl">
       {/* Header */}

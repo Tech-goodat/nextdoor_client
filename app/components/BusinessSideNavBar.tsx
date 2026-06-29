@@ -31,7 +31,7 @@ const BusinessSideNavBar = () => {
   
       try {
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/users/client/me/",
+          "https://nextdoor-server.onrender.com/user/me/",
           {
             headers: {
               Authorization: `Token ${token}`,

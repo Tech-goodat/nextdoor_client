@@ -36,45 +36,43 @@ const Profile = () => {
   }, []);
 
   const fetchBusiness = async () => {
-    try {
-      const token = localStorage.getItem("token");
+  try {
+    const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        "https://nextdoor-server.onrender.com/business/my-business/",
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok && data.length > 0) {
-        const business: Business = data[0];
-        
-
-        setBusinessId(business.id);
-       
-
-        setFormData({
-          business_name: business.business_name || "",
-          business_type: business.business_type || "",
-          description: business.description || "",
-          phone_number: business.phone_number || "",
-          shop_number: business.shop_number || "",
-          opens: business.opens || "",
-          closes: business.closes || "",
-        });
-        
+    const response = await fetch(
+      "https://nextdoor-server.onrender.com/business/my_business/",
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
       }
-    } catch (error) {
-      console.log(error);
-      setMessage("Failed to load business.");
-    } finally {
-      setLoading(false);
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      const business: Business = data; 
+
+      setBusinessId(business.id);
+      setFormData({
+        business_name: business.business_name || "",
+        business_type: business.business_type || "",
+        description: business.description || "",
+        phone_number: business.phone_number || "",
+        shop_number: business.shop_number || "",
+        opens: business.opens || "",
+        closes: business.closes || "",
+      });
+    } else {
+      setMessage(data.error || "Business not found.");
     }
-  };
+  } catch (error) {
+    console.log(error);
+    setMessage("Failed to load business.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -88,49 +86,57 @@ const Profile = () => {
   };
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    if (!businessId) {
-      setMessage("Business not found.");
-      return;
-    }
+  if (!businessId) {
+    setMessage("Business not found.");
+    return;
+  }
 
-    try {
-      setSaving(true);
-      setMessage("");
+  try {
+    setSaving(true);
+    setMessage("");
 
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `https://nextdoor-server.onrender.com/business/my-business/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("Business updated successfully.");
-        console.log(data);
-      } else {
-        console.log(data);
-        setMessage("Failed to update business.");
+    const response = await fetch(
+      `https://nextdoor-server.onrender.com/business/${businessId}/`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify(formData),
       }
-    } catch (error) {
-      console.log(error);
-      setMessage("Something went wrong.");
-    } finally {
-      setSaving(false);
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setMessage("Business updated successfully.");
+
+      setFormData({
+        business_name: data.business_name || "",
+        business_type: data.business_type || "",
+        description: data.description || "",
+        phone_number: data.phone_number || "",
+        shop_number: data.shop_number || "",
+        opens: data.opens || "",
+        closes: data.closes || "",
+      });
+    } else {
+      setMessage(data.error || "Failed to update business.");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    setMessage("Something went wrong.");
+  } finally {
+    setSaving(false);
+  }
+};
 
   if (loading) {
     return (

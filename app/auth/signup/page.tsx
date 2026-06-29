@@ -43,7 +43,7 @@ const Page = () => {
       setLoading(true);
 
       const response = await fetch(
-        "https://nextdoor-server.onrender.com/users/signup/",
+        "https://nextdoor-server.onrender.com/signup/",
         {
           method: "POST",
           headers: {
@@ -90,13 +90,13 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-white via-orange-50 to-lime-50">
+    <div className="min-h-screen w-full bg-linear-to-br from-white via-orange-50 to-lime-50">
       
       {/* Success Alert */}
       {success && (
         <div className="fixed top-4 right-4 z-50 animate-bounce sm:top-6 sm:right-6">
           <div className="flex max-w-sm items-start gap-3 rounded-2xl border border-orange-100 bg-white/90 backdrop-blur-md px-5 py-4 shadow-2xl">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-orange-100 to-lime-100">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-orange-100 to-lime-100">
               <CheckCircle2
                 size={22}
                 className="text-lime-600"

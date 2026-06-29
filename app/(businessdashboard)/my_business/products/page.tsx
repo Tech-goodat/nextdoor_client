@@ -30,7 +30,7 @@ export default function ProductsPage() {
 
       try {
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/product/",
+          "https://nextdoor-server.onrender.com/product/my_products/",
           {
             headers: {
               Authorization: `Token ${token}`,
