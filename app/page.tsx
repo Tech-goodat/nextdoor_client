@@ -47,16 +47,23 @@ useEffect(() => {
     }
 
     // Logged in business owner
-    if (user?.business) {
+    if (user?.business_name) {
       router.replace("/my_business/home");
       return;
     }
 
     // Logged in regular client
+    else if (user)
     router.replace("/client/home");
   };
 
+  router.replace("/");
+
+  
+
   checkAuthentication();
+
+  
 }, [router]);
 
   // Prevent landing page flashing before redirect
