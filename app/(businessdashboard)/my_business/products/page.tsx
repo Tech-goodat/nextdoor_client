@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Search,
   Plus,
@@ -21,8 +22,12 @@ interface Product {
 }
 
 export default function ProductsPage() {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [productToDelete, setProductToDelete] = useState<number | null>(null);
+const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -55,6 +60,46 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
+  const deleteProduct = async (id: number) => {
+    console.log("deleteProduct fired for id:", id); // DEBUG: remove once confirmed working
+
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(
+        `https://nextdoor-server.onrender.com/product/${id}/`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.text();
+        console.log(error);
+        throw new Error(error);
+      }
+
+      setProducts((prev) => prev.filter((item) => item.id !== id));
+
+      setShowSuccess(true);
+
+setTimeout(() => {
+  setShowSuccess(false);
+}, 2500);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete product.");
+    }
+  };
+
+  const goToEdit = (id: number) => {
+    console.log("goToEdit fired for id:", id); // DEBUG: remove once confirmed working
+    router.push(`/my_business/edit_product/${id}`);
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
@@ -65,57 +110,14 @@ export default function ProductsPage() {
     );
   }
 
+  {showSuccess && (
+  <div className="fixed right-6 top-6 z-50 rounded-xl bg-green-500 px-6 py-4 text-white shadow-lg">
+    ✅ Product deleted successfully.
+  </div>
+)}
+
   return (
     <div className="min-h-screen bg-slate-50 p-4 sm:p-6">
-      {/* Header */}
-      <div className="mb-6 sm:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
-            My Products
-          </h1>
-          <p className="mt-1 sm:mt-2 text-sm text-slate-500">
-            Manage all products for your business
-          </p>
-        </div>
-
-        <Link
-          href="/my_business/create_product"
-          className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg bg-orange-500 px-5 py-3 font-medium text-xs text-white transition hover:bg-orange-600"
-        >
-          <Plus size={18} />
-          Add Product
-        </Link>
-      </div>
-
-      {/* Search + Stats */}
-      <div className="mb-6 sm:mb-8 flex flex-col gap-4 lg:grid lg:grid-cols-4">
-        {/* Search */}
-        <div className="lg:col-span-3">
-          <div className="flex items-center gap-3 rounded-3xl border border-gray-300 bg-white px-4 sm:px-5 py-3 sm:py-4">
-            <Search className="shrink-0 text-slate-400" size={20} />
-            <input
-              placeholder="Search your products..."
-              className="w-full text-sm outline-none"
-            />
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="rounded-lg flex items-center border border-gray-300 bg-white py-3 px-5 sm:py-1 sm:px-6">
-          <div className="flex items-center gap-4 w-full">
-            <div className="rounded-full bg-orange-100 p-2 sm:p-1">
-              <Package size={20} className="text-orange-500" />
-            </div>
-            <div className="flex gap-1 items-center">
-              <h3 className="text-xl font-semibold text-orange-500">
-                {products.length}
-              </h3>
-              <p className="text-sm text-slate-500">Total Products</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Products Exist */}
       {products.length > 0 ? (
         <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
@@ -164,19 +166,38 @@ export default function ProductsPage() {
                       <span className="font-medium text-sm sm:text-base text-orange-500">
                         KSh {product.price}
                       </span>
+                      <span className=" text-xs sm:text-base text-gray-500">
+                        {product.description}
+                      </span>
+                      <span className=" text-xs sm:text-base text-orange-500">
+                        Discount - {product.discount} %
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-auto">
-                  <button className="flex cursor-pointer items-center gap-1 rounded-xl text-xs text-gray-700 px-3 py-2 border border-gray-200 hover:bg-gray-50 transition">
-                    <Pencil size={12} />
+                <div className="relative z-10 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => goToEdit(product.id)}
+                    className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-orange-600 transition hover:bg-orange-50"
+                  >
+                    <Pencil size={16} />
                     Edit
                   </button>
-                  <button className="rounded-full cursor-pointer bg-red-50 p-2 sm:p-3 text-red-500 hover:bg-red-100 transition">
-                    <Trash2 size={16} />
-                  </button>
+
+                  <button
+  type="button"
+  onClick={() => {
+    setProductToDelete(product.id);
+    setShowDeleteModal(true);
+  }}
+  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-600 transition hover:bg-red-50"
+>
+  <Trash2 size={16} />
+  Delete
+</button>
                 </div>
               </div>
             ))}
@@ -209,16 +230,53 @@ export default function ProductsPage() {
         </div>
       )}
 
-      {/* Tip Card */}
-      <div className="mt-6 sm:mt-8 rounded-3xl border border-orange-100 bg-orange-50 p-4 sm:p-5">
-        <div className="flex items-start gap-3">
-          <Lightbulb className="shrink-0 mt-0.5 text-orange-500" size={20} />
-          <p className="text-sm sm:text-base text-slate-700">
-            <span className="font-semibold">Tip:</span> Add clear product
-            descriptions and accurate prices to attract more customers.
-          </p>
-        </div>
+      {showDeleteModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl">
+
+      <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+        <Trash2 className="text-red-500" size={28} />
       </div>
+
+      <h2 className="text-center text-2xl font-bold text-slate-800">
+        Delete Product?
+      </h2>
+
+      <p className="mt-3 text-center text-slate-500">
+        This action cannot be undone. The product will be permanently removed
+        from your business.
+      </p>
+
+      <div className="mt-8 flex gap-3">
+
+        <button
+          onClick={() => {
+            setShowDeleteModal(false);
+            setProductToDelete(null);
+          }}
+          className="flex-1 rounded-xl border border-gray-300 py-3 font-medium text-slate-700 transition hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={async () => {
+            if (productToDelete !== null) {
+              await deleteProduct(productToDelete);
+            }
+
+            setShowDeleteModal(false);
+            setProductToDelete(null);
+          }}
+          className="flex-1 rounded-xl bg-red-500 py-3 font-medium text-white transition hover:bg-red-600"
+        >
+          Delete
+        </button>
+
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }

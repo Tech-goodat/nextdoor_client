@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Search,
   Plus,
@@ -22,7 +21,6 @@ interface Product {
 }
 
 export default function ProductsPage() {
-  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,43 +54,6 @@ export default function ProductsPage() {
 
     fetchProducts();
   }, []);
-
-  const deleteProduct = async (id: number) => {
-
-    if (!window.confirm("Delete this product?")) return;
-
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await fetch(
-        `https://nextdoor-server.onrender.com/product/${id}/`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.text();
-        console.log(error);
-        throw new Error(error);
-      }
-
-      setProducts((prev) => prev.filter((item) => item.id !== id));
-
-      alert("✅ Product deleted successfully.");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete product.");
-    }
-  };
-
-  const goToEdit = (id: number) => {
-    console.log("goToEdit fired for id:", id); // DEBUG: remove once confirmed working
-    router.push(`/my_business/edit_product/${id}`);
-  };
 
   if (loading) {
     return (
@@ -159,25 +120,6 @@ export default function ProductsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="relative z-10 flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => goToEdit(product.id)}
-                    className="flex items-center gap-2 rounded-lg border border-orange-200 px-4 py-2 text-sm text-orange-600 transition hover:bg-orange-50"
-                  >
-                    <Pencil size={16} />
-                    Edit
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => deleteProduct(product.id)}
-                    className="flex items-center gap-2 rounded-lg border border-red-200 px-4 py-2 text-sm text-red-600 transition hover:bg-red-50"
-                  >
-                    <Trash2 size={16} />
-                    Delete
-                  </button>
-                </div>
               </div>
             ))}
           </div>
@@ -208,6 +150,7 @@ export default function ProductsPage() {
           </Link>
         </div>
       )}
+
     </div>
   );
 }

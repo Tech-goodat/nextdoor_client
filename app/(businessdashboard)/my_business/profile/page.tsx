@@ -104,7 +104,7 @@ const Profile = () => {
     const response = await fetch(
       `https://nextdoor-server.onrender.com/business/${businessId}/`,
       {
-        method: "PATCH",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
