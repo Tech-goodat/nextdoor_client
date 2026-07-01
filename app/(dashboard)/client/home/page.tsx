@@ -219,7 +219,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen w-full  bg-gray-50  ">   
+    <div className="min-h-screen mt-10 w-full  bg-gray-50">   
       {/* Categories */}
       <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
         {categories.map((category) => (

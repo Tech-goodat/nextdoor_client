@@ -4,6 +4,10 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { ArrowLeft, Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
+import {
+  GoogleLogin,
+  CredentialResponse,
+} from "@react-oauth/google";
 
 const Page = () => {
 const router = useRouter();
@@ -54,6 +58,46 @@ const handleSubmit = async (
 
   } catch (error) {
     console.error(error);
+    alert("Something went wrong.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
+  try {
+    setLoading(true);
+
+    const response = await fetch(
+      "https://nextdoor-server.onrender.com/auth/google/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: credentialResponse.credential,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.detail || "Google login failed");
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    if (data.user?.business_name) {
+      router.push("/my_business/home");
+    } else {
+      router.push("/client/home");
+    }
+  } catch (err) {
+    console.error(err);
     alert("Something went wrong.");
   } finally {
     setLoading(false);
@@ -155,6 +199,27 @@ const handleSubmit = async (
                   : "Sign In"}
               </button>
             </form>
+
+            <div className="relative my-6">
+  <div className="absolute inset-0 flex items-center">
+    <div className="w-full border-t border-gray-200" />
+  </div>
+
+  <div className="relative flex justify-center">
+    <span className="bg-white px-4 text-sm text-gray-500">
+      OR
+    </span>
+  </div>
+</div>
+
+<div className="flex justify-center">
+ <GoogleLogin
+  onSuccess={handleGoogleLogin}
+  onError={() => {
+    console.log("Login Failed");
+  }}
+/>
+</div>
 
             <div className="mt-8 border-t border-gray-100 pt-6">
               <p className="text-center text-sm text-gray-600">

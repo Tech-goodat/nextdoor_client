@@ -47,8 +47,8 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
 
         {/* Page Content */}
-        <main className="h-screen overflow-y-auto pt-32 pb-8 ">
-          <div className="mx-auto ">
+        <main className="h-screen w-full overflow-y-auto pt-32 pb-8 ">
+          <div className="mx-auto w-full">
             {children}
           </div>
         </main>
