@@ -168,7 +168,7 @@ const Home = () => {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/announcement/",
+          "https://nextdoor-server.onrender.com/announcement/?limit=3",
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -360,7 +360,7 @@ const Home = () => {
 <div className="mt-8 w-full rounded-3xl border border-gray-200 bg-white p-5">
   <div className="mb-5 flex items-center justify-between">
     <h3 className="text-lg font-semibold text-gray-700">
-      Community Updates
+      Recent Community Updates
     </h3>
 
     <Link

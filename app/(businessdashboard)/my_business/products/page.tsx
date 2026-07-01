@@ -122,20 +122,35 @@ setTimeout(() => {
       {products.length > 0 ? (
         <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
           {/* Section Header */}
-          <div className="mb-4 sm:mb-6 flex items-center gap-3">
-            <div className="rounded-xl bg-orange-100 p-2 sm:p-3">
-              <Package size={20} className="text-orange-500" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-sm text-slate-800">
-                <span className="text-lg text-orange-400">{products.length}</span>{" "}
-                PRODUCTS LISTED
-              </h3>
-              <p className="text-sm text-slate-500">
-                Here are all products you have added
-              </p>
-            </div>
-          </div>
+          {/* Section Header */}
+<div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <div className="flex items-center gap-3">
+    <div className="rounded-xl bg-orange-100 p-2 sm:p-3">
+      <Package size={20} className="text-orange-500" />
+    </div>
+
+    <div>
+      <h3 className="font-semibold text-sm text-slate-800">
+        <span className="text-lg text-orange-500">
+          {products.length}
+        </span>{" "}
+        PRODUCTS LISTED
+      </h3>
+
+      <p className="text-sm text-slate-500">
+        Here are all products you have added.
+      </p>
+    </div>
+  </div>
+
+  <Link
+    href="/my_business/create_product"
+    className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-orange-600"
+  >
+    <Plus size={18} />
+    Add Product
+  </Link>
+</div>
 
           {/* Product List */}
           <div className="space-y-3 sm:space-y-4">

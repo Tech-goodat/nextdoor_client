@@ -168,7 +168,7 @@ const Home = () => {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/announcement/",
+          "https://nextdoor-server.onrender.com/announcement/?limit=3",
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -255,7 +255,7 @@ const Home = () => {
       <p className="mb-6 text-xs items-center font-medium uppercase tracking-wide text-gray-600">
        Nearby businesses
       </p>
-      <Link href='/my_business/all_businesses' className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600">View all <FaArrowRightLong size={15}/></Link>
+      <Link href='/client/all_businesses' className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600">View all <FaArrowRightLong size={15}/></Link>
         </div>
           {filteredBusinesses.map((business) => (
             <div
@@ -348,7 +348,7 @@ const Home = () => {
               
             ))}
             <div className="flex w-full items-center justify-between ml-[85%] ">
-      <Link href='/my_business/all_products' className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600">View all <FaArrowRightLong size={15}/></Link>
+      <Link href='/client/all_products' className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600">View all <FaArrowRightLong size={15}/></Link>
         </div>
           </div>
           </div>
@@ -364,7 +364,7 @@ const Home = () => {
     </h3>
 
     <Link
-      href="/my_business/notifications"
+      href="/client/notifications"
       className="flex items-center gap-2 text-xs text-gray-600 hover:text-orange-500"
     >
       View all

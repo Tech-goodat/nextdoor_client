@@ -21,9 +21,21 @@ interface User {
   email: string;
 }
 
+interface Announcement {
+  id: number;
+  title: string;
+  message: string;
+  announcement_type: string;
+  business_name: string;
+  product_name: string | null;
+  created_at: string;
+}
+
 
 const BusinessSideNavBar = () => {
   const [user, setUser] = useState<User | null>(null);
+    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+    const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     const fetchUser = async () => {
@@ -49,6 +61,36 @@ const BusinessSideNavBar = () => {
   
     fetchUser();
   }, []);
+
+  useEffect(() => {
+      const fetchAnnouncements = async () => {
+        try {
+          const token = localStorage.getItem("token");
+  
+          const response = await fetch(
+            "https://nextdoor-server.onrender.com/announcement/",
+            {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            }
+          );
+  
+          if (!response.ok) {
+            throw new Error("Failed to fetch announcements");
+          }
+  
+          const data = await response.json();
+          setAnnouncements(data);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchAnnouncements();
+    }, []);
   return (
     <aside className="flex h-screen w-50 flex-col border-r border-white/50 bg-white/80 backdrop-blur-md shadow-lg">
       {/* Logo */}
@@ -105,7 +147,7 @@ const BusinessSideNavBar = () => {
               </div>
 
               <span className="rounded-full bg-lime-100 px-2 py-0.5 text-sm font-semibold text-lime-700">
-                2
+                {announcements.length}
               </span>
             </Link>
 
