@@ -63,7 +63,7 @@ const Home = () => {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/business/?limit=3",
+          "https://nextdoor-server.onrender.com/business/?limit=2",
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -137,7 +137,7 @@ const Home = () => {
 
       try {
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/product/?limit=3",
+          "https://nextdoor-server.onrender.com/product/?limit=2",
           {
             headers: {
               Authorization: `Token ${token}`,

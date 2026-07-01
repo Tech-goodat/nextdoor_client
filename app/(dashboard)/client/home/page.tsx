@@ -210,7 +210,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="flex min-h-screen w-full items-center justify-center">
         <div className="rounded-xl border border-gray-200 bg-white px-6 py-4 text-gray-600 shadow-sm">
           Loading products...
         </div>
@@ -219,7 +219,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen w-full  bg-gray-50 p-4 md:p-8">   
+    <div className="min-h-screen w-full  bg-gray-50  ">   
       {/* Categories */}
       <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
         {categories.map((category) => (
@@ -260,7 +260,7 @@ const Home = () => {
           {filteredBusinesses.map((business) => (
             <div
               key={business.id}
-              className="flex items-center justify-between rounded-3xl border border-gray-200 bg-white px-5 py-3 transition hover:shadow-md"
+              className="flex items-center justify-between rounded-3xl border border-gray-200 bg-white py-3 transition hover:shadow-md"
             >
               <div className="flex gap-4">
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-lime-50">
@@ -314,7 +314,7 @@ const Home = () => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-3xl border border-gray-200 p-4 sm:p-5 transition hover:shadow-sm"
+                className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-3xl border border-gray-200 sm:p-5 transition hover:shadow-sm"
               >
                 
                 {/* Product Info */}
@@ -377,7 +377,7 @@ const Home = () => {
       No announcements yet.
     </p>
   ) : (
-    <div className="space-y-4">
+    <div className="space-y-4 ">
       {announcements.map((announcement) => (
         <div
           key={announcement.id}
