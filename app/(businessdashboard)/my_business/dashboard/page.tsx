@@ -205,9 +205,28 @@ const BusinessDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <div className="rounded-xl border border-gray-200 bg-white px-6 py-4 text-gray-600 shadow-sm">
-          Loading your dashboard...
+     <div className="flex w-full min-h-screen items-center justify-center bg-linear-to-br from-slate-50 to-gray-100 px-4">
+        <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200">
+          <div className="flex flex-col items-center">
+            <div className="relative h-16 w-16">
+              <div className="absolute inset-0 rounded-full border-4 border-gray-200"></div>
+              <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-orange-400 border-r-orange-400"></div>
+            </div>
+
+            <h2 className="mt-6 text-xl font-semibold text-gray-700">
+              Loading dashboard...
+            </h2>
+
+            <p className="mt-2 text-center text-sm text-gray-500">
+              Please wait while we update your dashboard.
+            </p>
+
+            <div className="mt-6 flex gap-2">
+              <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-400 [animation-delay:-0.3s]"></span>
+              <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-lime-400 [animation-delay:-0.15s]"></span>
+              <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-400"></span>
+            </div>
+          </div>
         </div>
       </div>
     );

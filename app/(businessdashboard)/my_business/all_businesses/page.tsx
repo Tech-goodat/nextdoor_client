@@ -133,7 +133,7 @@ const Home = () => {
           No businesses found.
         </div>
       ) : (
-        <div className="flex flex-col gap-5">
+        <div className="flex w-full lg:grid grid-cols-2 flex-col gap-5">
           {filteredBusinesses.map((business) => (
             <div
               key={business.id}

@@ -18,6 +18,7 @@ interface Product {
   price: string;
   discount?: string;
   is_available: boolean;
+  business_name: string;
 }
 
 export default function ProductsPage() {
@@ -57,16 +58,35 @@ export default function ProductsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <div className="rounded-xl border border-gray-200 bg-white px-6 py-4 text-gray-600 shadow-sm">
-          Loading products...
+      <div className="flex w-full min-h-screen items-center justify-center bg-linear-to-br from-slate-50 to-gray-100 px-4">
+        <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200">
+          <div className="flex flex-col items-center">
+            <div className="relative h-16 w-16">
+              <div className="absolute inset-0 rounded-full border-4 border-gray-200"></div>
+              <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-orange-400 border-r-orange-400"></div>
+            </div>
+
+            <h2 className="mt-6 text-xl font-semibold text-gray-700">
+              Loading Products...
+            </h2>
+
+            <p className="mt-2 text-center text-sm text-gray-500">
+              Please wait while we fetch the latest products for you.
+            </p>
+
+            <div className="mt-6 flex gap-2">
+              <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-400 [animation-delay:-0.3s]"></span>
+              <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-lime-400 [animation-delay:-0.15s]"></span>
+              <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-orange-400"></span>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 sm:p-6">
+    <div className="min-h-screen w-full bg-slate-50 p-4 sm:p-6">
       {/* Products Exist */}
       {products.length > 0 ? (
         <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
@@ -87,7 +107,7 @@ export default function ProductsPage() {
           </div>
 
           {/* Product List */}
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-3 flex flex-col lg:grid grid-cols-2 gap-5 sm:space-y-4">
             {products.map((product) => (
               <div
                 key={product.id}
@@ -115,6 +135,9 @@ export default function ProductsPage() {
                       <span className="font-medium text-sm sm:text-base text-orange-500">
                         KSh {product.price}
                       </span>
+                      <span className="font-medium text-xs sm:text-base text-gray-500">
+                          {product.business_name}
+                        </span>
                     </div>
                   </div>
                 </div>
