@@ -56,6 +56,38 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
+  const addToCart = async (productId: number) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch(
+      "https://nextdoor-server.onrender.com/cart/add_item/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({
+          product: productId,
+          quantity: 1,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to add item.");
+    }
+
+    alert("Added to cart!");
+  } catch (error) {
+    console.error(error);
+    alert("Could not add item.");
+  }
+};
+
   if (loading) {
     return (
       <div className="flex w-full min-h-screen items-center justify-center bg-linear-to-br from-slate-50 to-gray-100 px-4">
@@ -138,11 +170,21 @@ export default function ProductsPage() {
                       <span className="font-medium text-xs sm:text-base text-gray-500">
                           {product.business_name}
                         </span>
+
                     </div>
                   </div>
                 </div>
 
                 {/* Actions */}
+                <div className="flex justify-end">
+  <button
+    onClick={() => addToCart(product.id)}
+    className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-orange-600"
+  >
+    <Plus size={16} />
+    Add to Cart
+  </button>
+</div>
               </div>
             ))}
           </div>
