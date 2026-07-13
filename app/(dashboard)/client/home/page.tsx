@@ -210,9 +210,20 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen w-full items-center justify-center">
-        <div className="rounded-xl border border-gray-200 bg-white px-6 py-4 text-gray-600 shadow-sm">
-          Loading products...
+      <div className="flex w-full min-h-screen items-center justify-center bg-slate-50">
+        <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200">
+          <div className="flex flex-col items-center">
+            <div className="relative h-16 w-16">
+              <div className="absolute inset-0 rounded-full border-4 border-gray-200"></div>
+              <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-orange-400 border-r-orange-400"></div>
+            </div>
+            <h2 className="mt-6 text-xl font-semibold text-gray-700">
+              Hold on...
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-500">
+              Please wait while we fetch items for you.
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -221,32 +232,36 @@ const Home = () => {
   return (
     <div className="min-h-screen mt-10 w-full  bg-gray-50">   
       {/* Categories */}
-      <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`whitespace-nowrap rounded-full border px-5 py-2 text-sm text-gray-700 transition ${
-              selectedCategory === category
-                ? "border-lime-400 bg-lime-400 text-black"
-                : "border-gray-200 bg-white"
-            }`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+     
 
       {/* Count */}
       
       {/* Loading */}
       {loading ? (
-        <div className="py-20 text-center">
-          Loading businesses...
-        </div>
+        <div>
+          </div>
       ) : filteredBusinesses.length === 0 ? (
-        <div className="py-20 text-center text-gray-500">
-          No businesses found.
+       <div className="rounded-3xl  border border-gray-300 bg-white p-8 sm:p-12 text-center shadow-xs">
+          <div className="mx-auto mb-5 sm:mb-6 flex h-20 w-20 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-orange-50">
+            <Package size={40} className="text-orange-500 sm:hidden" />
+            <Package size={50} className="text-orange-500 hidden sm:block" />
+          </div>
+
+          <h2 className="mb-2 sm:mb-3 text-2xl sm:text-3xl font-bold text-slate-900">
+            Nthing Here yet
+          </h2>
+
+          <p className="mx-auto max-w-lg text-sm sm:text-base text-slate-500">
+          Items will appear here soon as more businesses and products are added to the platform. Stay tuned for updates and check back later to discover new offerings from local businesses in your area.
+          </p>
+
+          <Link
+            href="/client/convert"
+            className="mt-6 sm:mt-8 inline-flex items-center gap-2 text-sm rounded-lg bg-orange-500 px-5 sm:px-6 py-3 font-medium text-white transition hover:bg-orange-600"
+          >
+            <Plus size={18} />
+            Start Selling
+          </Link>
         </div>
       ) : (
         <div className="flex lg:grid lg:grid-cols-2 flex-col gap-5">
@@ -373,9 +388,21 @@ const Home = () => {
   </div>
 
   {announcements.length === 0 ? (
-    <p className="py-6 text-center text-sm text-gray-500">
-      No announcements yet.
-    </p>
+    <div className="rounded-3xl  border border-gray-300 bg-white p-8 sm:p-12 text-center shadow-xs">
+          <div className="mx-auto mb-5 sm:mb-6 flex h-20 w-20 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-orange-50">
+            <Package size={40} className="text-orange-500 sm:hidden" />
+            <Package size={50} className="text-orange-500 hidden sm:block" />
+          </div>
+
+          <h2 className="mb-2 sm:mb-3 text-2xl sm:text-3xl font-bold text-slate-900">
+            Nthing Here yet
+          </h2>
+
+          <p className="mx-auto max-w-lg text-sm sm:text-base text-slate-500">
+            Announcements will appear here soon as more businesses and products are added to the platform. Stay tuned for updates and check back later to discover new offerings from local businesses in your area.
+          </p>
+        </div>
+ 
   ) : (
     <div className="space-y-4 ">
       {announcements.map((announcement) => (

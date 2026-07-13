@@ -81,7 +81,7 @@ export default function CreateProductForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-3 mt-10"
+      className="space-y-3  mt-10"
     >
       {/* Product Name */}
       <div>

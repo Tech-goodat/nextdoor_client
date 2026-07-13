@@ -136,7 +136,7 @@ setTimeout(() => {
 )}
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 sm:p-6">
+    <div className="min-h-screen flex w-full items-center justify-center flex-col bg-slate-50 p-4 sm:p-6">
       {/* Products Exist */}
       {products.length > 0 ? (
         <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
@@ -239,7 +239,7 @@ setTimeout(() => {
         </div>
       ) : (
         /* Empty State */
-        <div className="rounded-3xl border border-gray-300 bg-white p-8 sm:p-12 text-center shadow-xs">
+        <div className="rounded-3xl  border border-gray-300 bg-white p-8 sm:p-12 text-center shadow-xs">
           <div className="mx-auto mb-5 sm:mb-6 flex h-20 w-20 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-orange-50">
             <Package size={40} className="text-orange-500 sm:hidden" />
             <Package size={50} className="text-orange-500 hidden sm:block" />
