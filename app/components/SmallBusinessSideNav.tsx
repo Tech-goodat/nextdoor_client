@@ -31,19 +31,19 @@ const SmallBusinessSideNav = ({
   onClose,
 }: SmallBusinessSideNavProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [cartCount, setCartCount] = useState<number>(0);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+    const authHeaders = {
+      Authorization: `Token ${token}`,
+    };
 
+    const fetchUser = async () => {
       try {
         const response = await fetch(
           "https://nextdoor-server.onrender.com/user/me/",
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
+          { headers: authHeaders }
         );
 
         const data: User = await response.json();
@@ -53,7 +53,24 @@ const SmallBusinessSideNav = ({
       }
     };
 
+    const fetchCartCount = async () => {
+      try {
+        const response = await fetch(
+          "https://nextdoor-server.onrender.com/cart/",
+          { headers: authHeaders }
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch cart.");
+
+        const data = await response.json();
+        setCartCount(data.total_items ?? 0);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchUser();
+    fetchCartCount();
   }, []);
 
   return (
@@ -117,10 +134,18 @@ const SmallBusinessSideNav = ({
           <Link
             href="/my_business/cart"
             onClick={onClose}
-            className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-gray-700 transition hover:bg-orange-50 hover:text-orange-600"
+            className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-sm text-gray-700 transition hover:bg-orange-50 hover:text-orange-600"
           >
-            <ShoppingCart size={18} />
-            Cart
+            <span className="flex items-center gap-3">
+              <ShoppingCart size={18} />
+              Cart
+            </span>
+
+            {cartCount > 0 && (
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1.5 text-xs font-semibold text-white">
+                {cartCount}
+              </span>
+            )}
           </Link>
         </div>
 

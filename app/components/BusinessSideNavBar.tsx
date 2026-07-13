@@ -34,13 +34,14 @@ interface Announcement {
 
 const BusinessSideNavBar = () => {
   const [user, setUser] = useState<User | null>(null);
-    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-    const [loading, setLoading] = useState(true);
-  
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState<number>(0);
+
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
-  
+
       try {
         const response = await fetch(
           "https://nextdoor-server.onrender.com/user/me/",
@@ -50,47 +51,74 @@ const BusinessSideNavBar = () => {
             },
           }
         );
-  
+
        const data: User = await response.json();
-  setUser(data);
+       setUser(data);
         console.log('user.............................', data)
       } catch (error) {
         console.error(error);
       }
     };
-  
+
     fetchUser();
   }, []);
 
   useEffect(() => {
-      const fetchAnnouncements = async () => {
-        try {
-          const token = localStorage.getItem("token");
-  
-          const response = await fetch(
-            "https://nextdoor-server.onrender.com/announcement/",
-            {
-              headers: {
-                Authorization: `Token ${token}`,
-              },
-            }
-          );
-  
-          if (!response.ok) {
-            throw new Error("Failed to fetch announcements");
+    const fetchAnnouncements = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(
+          "https://nextdoor-server.onrender.com/announcement/",
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
           }
-  
-          const data = await response.json();
-          setAnnouncements(data);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch announcements");
         }
-      };
-  
-      fetchAnnouncements();
-    }, []);
+
+        const data = await response.json();
+        setAnnouncements(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await fetch(
+          "https://nextdoor-server.onrender.com/cart/",
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch cart.");
+
+        const data = await response.json();
+        setCartCount(data.total_items ?? 0);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCartCount();
+  }, []);
+
   return (
     <aside className="flex h-screen w-50 flex-col border-r border-white/50 bg-white/80 backdrop-blur-md shadow-lg">
       {/* Logo */}
@@ -160,9 +188,11 @@ const BusinessSideNavBar = () => {
                 Cart
               </div>
 
-              <span className="rounded-full bg-orange-100 px-2 py-0.5 text-sm font-semibold text-orange-600">
-                3
-              </span>
+              {cartCount > 0 && (
+                <span className="rounded-full bg-orange-100 px-2 py-0.5 text-sm font-semibold text-orange-600">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
           </div>
