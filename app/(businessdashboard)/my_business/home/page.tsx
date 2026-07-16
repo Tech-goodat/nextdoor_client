@@ -213,7 +213,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen w-full bg-gray-50 p-0 sm:p-6 md:p-8">
       {/* Categories */}
       <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
         {categories.map((category) => (
@@ -333,7 +333,7 @@ const Home = () => {
                   </div>
                 </div>
               ))}
-              <div className="flex w-full items-center justify-between ml-[85%]">
+              <div className="flex w-full items-center justify-end">
                 <Link
                   href="/my_business/all_products"
                   className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600"

@@ -230,7 +230,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen mt-10 w-full  bg-gray-50">   
+    <div className="min-h-screen w-full bg-gray-50">
       {/* Categories */}
      
 
@@ -362,7 +362,7 @@ const Home = () => {
               </div>
               
             ))}
-            <div className="flex w-full items-center justify-between ml-[85%] ">
+            <div className="flex w-full items-center justify-end">
       <Link href='/client/all_products' className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600">View all <FaArrowRightLong size={15}/></Link>
         </div>
           </div>
