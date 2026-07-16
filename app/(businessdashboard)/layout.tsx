@@ -38,7 +38,7 @@ const Layout = ({ children }: LayoutProps) => {
       )}
 
       {/* Main Area */}
-      <div className="items-center justify-center lg:ml-20 w-full">
+      <div className="items-center justify-center  min-h-screen flex flex-col lg:ml-20 w-full">
         {/* Top Navbar */}
         <div className="left-0 right-0 top-0 z-40 ">
           <TopNavBar
