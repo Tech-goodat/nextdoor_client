@@ -102,7 +102,7 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
               />
 
               {/* Dropdown */}
-              <div className="absolute right-0 top-12 z-50 min-w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
+              <div className="absolute right-0 top-11 z-50 min-w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
                 <div className="bg-gradient-to-r from-orange-50 to-lime-50 px-4 py-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 font-semibold text-white">

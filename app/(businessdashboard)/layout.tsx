@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="h-screen overflow-hidden bg-linear-to-br from-gray-100 to-white">
+    <div className="h-screen overflow-hidden w-full flex  bg-linear-to-br from-gr to-white">
       {/* Desktop Sidebar */}
       <aside className="fixed left-0 top-0 z-50 hidden h-screen w-60 lg:block">
         <BusinessSideNavBar />
@@ -47,7 +47,7 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
 
         {/* Content */}
-        <main className="h-screen w-full flex overflow-y-auto px-4 pb-8 pt-32 text-gray-700 sm:px-6 lg:px">
+        <main className="h-screen w-full flex overflow-y-auto pb-8 pt-32 text-gray-700 sm:px-6 lg:px">
           <div className="w-full  flex">
             {children}
           </div>

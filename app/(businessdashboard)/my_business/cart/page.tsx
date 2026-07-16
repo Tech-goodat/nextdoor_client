@@ -290,12 +290,18 @@ export default function CartPage() {
                     KSh {group.subtotal}
                   </span>
                 </div>
+                <div className="mt-2 flex justify-end text-sm text-slate-500">
+                  <Link href='/my_business/checkout' className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 py-3 font-medium text-white transition hover:bg-orange-600">
+              Proceed to Checkout
+              <ArrowRight size={18} />
+            </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Summary */}
+        {/* Summary 
         <div>
           <div className="sticky top-6 rounded-3xl border border-gray-300 bg-white p-6">
             <h2 className="mb-6 text-lg font-semibold text-slate-800">
@@ -320,6 +326,7 @@ export default function CartPage() {
             </button>
           </div>
         </div>
+        */}
       </div>
     </div>
   );

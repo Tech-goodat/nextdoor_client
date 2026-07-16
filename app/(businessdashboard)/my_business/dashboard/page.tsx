@@ -245,7 +245,7 @@ const BusinessDashboard = () => {
       </div>
 
       {/* Quick actions */}
-      <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
+      <div className="mb-8 lg:flex grid grid-cols-2  gap-2 overflow-x-auto pb-2">
         <QuickAction
           href="/my_business/add_product"
           label="Add product"
@@ -264,7 +264,7 @@ const BusinessDashboard = () => {
       </div>
 
       {/* Stats */}
-      <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mb-8 flex flex-col md:grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
           label="Products listed"
           value={stats.totalProducts}

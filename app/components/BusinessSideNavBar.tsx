@@ -253,7 +253,7 @@ const BusinessSideNavBar = () => {
 
       {/* User */}
       <div className="border-t border-gray-100 p-4">
-        <div className="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-50 to-lime-50 p-3">
+        <div className="flex items-center gap-3 rounded-2xl bg-linear-to-r from-orange-50 to-lime-50 p-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 font-bold text-white">
             {user?.first_name?.charAt(0).toUpperCase()}
           </div>
