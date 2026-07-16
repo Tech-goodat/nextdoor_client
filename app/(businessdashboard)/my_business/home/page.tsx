@@ -238,15 +238,16 @@ const Home = () => {
         <div className="flex w-full lg:grid lg:grid-cols-2 flex-col gap-5">
           <div className="flex w-full flex-col gap-5">
             <div className="flex w-full items-center justify-between">
-              <p className="mb-6 text-xs items-center font-medium uppercase tracking-wide text-gray-600">
+              <p className="text-xs items-center font-medium uppercase tracking-wide text-gray-600">
                 Nearby businesses
-              </p>
+             
               <Link
                 href="/my_business/all_businesses"
                 className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600"
               >
                 View all <FaArrowRightLong size={15} />
               </Link>
+               </p>
             </div>
             {filteredBusinesses.map((business) => (
               <div
@@ -298,7 +299,17 @@ const Home = () => {
           </div>
 
           <div className="flex flex-col items-center w-full gap-5">
+            
             <div className="space-y-5 mt-15 flex w-full flex-col sm:space-y-4">
+              <div className="flex w-full items-center justify-between ">
+                <p className="text-xs items-center font-medium uppercase tracking-wide text-gray-600">Products</p>
+                <Link
+                  href="/my_business/all_products"
+                  className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600"
+                >
+                  Explore <FaArrowRightLong size={15} />
+                </Link>
+              </div>
               {products.map((product) => (
                 <div
                   key={product.id}
@@ -333,14 +344,7 @@ const Home = () => {
                   </div>
                 </div>
               ))}
-              <div className="flex w-full items-center justify-between ml-[85%]">
-                <Link
-                  href="/my_business/all_products"
-                  className="flex gap-2 mr-5 items-center hover:text-orange-400 cursor-pointer text-xs text-gray-600"
-                >
-                  View all <FaArrowRightLong size={15} />
-                </Link>
-              </div>
+              
             </div>
           </div>
         </div>
