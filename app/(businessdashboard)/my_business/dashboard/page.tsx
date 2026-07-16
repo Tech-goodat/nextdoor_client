@@ -93,7 +93,7 @@ const QuickAction = ({
     href={href}
     className="flex items-center gap-2 whitespace-nowrap rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-lime-400 hover:bg-lime-50 hover:text-lime-700"
   >
-    <Icon size={16} />
+    <Icon size={22} />
     {label}
   </Link>
 );
