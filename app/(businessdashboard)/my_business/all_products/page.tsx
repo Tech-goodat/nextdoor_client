@@ -118,10 +118,10 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 p-4 sm:p-6">
+    <div className="min-h-screen sm:p-6">
       {/* Products Exist */}
       {products.length > 0 ? (
-        <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
+        <div className="rounded-3xl p-2 md:p-4 w-full border border-gray-300 bg-white shadow-sm">
           {/* Section Header */}
           <div className="mb-4 sm:mb-6 flex items-center gap-3">
             <div className="rounded-xl bg-orange-100 p-2 sm:p-3">
@@ -139,7 +139,7 @@ export default function ProductsPage() {
           </div>
 
           {/* Product List */}
-          <div className="space-y-3 flex flex-col lg:grid grid-cols-2 gap-5 sm:space-y-4">
+          <div className="space-y-3 flex w-full flex-col lg:grid grid-cols-2 gap-5 sm:space-y-4">
             {products.map((product) => (
               <div
                 key={product.id}

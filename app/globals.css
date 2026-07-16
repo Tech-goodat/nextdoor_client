@@ -9,3 +9,9 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* If it's the whole page scrollbar you want gone: */
+html,
+body {
+  overflow-x: hidden;
+}

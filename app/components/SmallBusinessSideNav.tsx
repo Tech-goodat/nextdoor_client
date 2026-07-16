@@ -74,7 +74,7 @@ const SmallBusinessSideNav = ({
   }, []);
 
   return (
-    <aside className="flex h-screen w-72 flex-col bg-white shadow-2xl">
+    <aside className="flex flex-1 h-screen w-72 flex-col bg-white shadow-2xl">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-gray-100 px-6 py-6">
         <div>
