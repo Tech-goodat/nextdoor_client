@@ -98,7 +98,7 @@ const Home = () => {
   });
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-0 sm:p-6 md:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
 
 
       {/* Categories */}

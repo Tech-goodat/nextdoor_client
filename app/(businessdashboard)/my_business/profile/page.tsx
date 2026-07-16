@@ -168,10 +168,10 @@ const Profile = () => {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl px-0 sm:px-6">
+    <div className="max-w-4xl flex mx-auto px-6 ">
       <form
         onSubmit={handleSubmit}
-        className="flex w-full flex-col p-5 sm:p-8"
+        className="flex w-full flex-col  p-8"
       >
         {/* Logo */}
         <div className="flex flex-col items-center mb-10">

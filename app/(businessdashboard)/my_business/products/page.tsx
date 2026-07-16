@@ -136,7 +136,7 @@ setTimeout(() => {
 )}
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-slate-50 p-0 sm:p-6">
+    <div className="min-h-screen flex w-full items-center justify-center flex-col bg-slate-50 p-4 sm:p-6">
       {/* Products Exist */}
       {products.length > 0 ? (
         <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">

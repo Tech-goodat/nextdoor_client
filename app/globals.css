@@ -1,23 +1,5 @@
 @import "tailwindcss";
 
-html,
-body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* Dashboard route content is full-bleed on phones; pages restore gutters at sm+. */
-@media (max-width: 639px) {
-  main > div > .min-h-screen.p-4,
-  main > div > .min-h-screen.px-4 {
-    padding-inline: 0;
-  }
-
-  main > div > .min-h-screen.p-4 {
-    padding-block: 0;
-  }
-}
-
 /* Hide scrollbar but keep scrolling */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

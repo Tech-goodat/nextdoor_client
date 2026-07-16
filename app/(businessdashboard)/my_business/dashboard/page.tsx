@@ -233,7 +233,7 @@ const BusinessDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-0 sm:p-6 md:p-8">
+    <div className="min-h-screen w-full bg-gray-50 p-4 md:p-8">
       {/* Header */}
       <div className="mb-6 flex flex-col gap-1">
         <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
