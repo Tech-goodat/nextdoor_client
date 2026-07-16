@@ -77,7 +77,7 @@ const AnnouncementsPage = () => {
   }
 
   return (
-    <div className="min-h-screen  bg-gray-50 px-4 py-8 md:px-10">
+    <div className="min-h-screen w-full flex items-center flex-col px-4 py-8 md:px-10">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-3">
@@ -85,12 +85,12 @@ const AnnouncementsPage = () => {
             <Bell className="text-orange-500" size={26} />
           </div>
 
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">
+          <div className="flex w-full flex-col">
+            <h1 className="text-xl md:text-3xl font-bold text-gray-800">
               Community Announcements
             </h1>
 
-            <p className="mt-1 text-gray-500">
+            <p className="mt-1 text-xs max-w-60 lg:text text-gray-500">
               Stay updated with everything happening around the estate.
             </p>
           </div>
