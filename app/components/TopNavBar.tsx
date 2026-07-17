@@ -65,12 +65,12 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
             <Menu size={24} />
           </button>
 
-          <h1 className="text-lg font-bold text-gray-800 sm:text-2xl">
+          <h1 className="text-sm font-bold text-gray-800 sm:text-2xl">
             What's Good{" "}
-            <span className="text-2xl text-orange-400">
+            <span className="text-md text-orange-400">
               {user?.first_name}
             </span>
-            <span className="ml-1 text-4xl font-bold text-lime-600">
+            <span className="ml-1 text-md font-bold text-lime-600">
               ...
             </span>
           </h1>
@@ -88,7 +88,7 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
         >
           <button
             onClick={() => setOpen((prev) => !prev)}
-            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-gray-400 text-xl font-semibold text-white shadow-md transition-all duration-300 hover:scale-105"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-400 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-105"
           >
             {user?.first_name?.charAt(0).toUpperCase()}
           </button>
@@ -102,7 +102,7 @@ const TopNavBar = ({ onMenuClick }: TopNavBarProps) => {
               />
 
               {/* Dropdown */}
-              <div className="absolute right-0 top-11 z-50 min-w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
+              <div className="absolute  right-0 top-11 z-50 min-w-64 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
                 <div className="bg-gradient-to-r from-orange-50 to-lime-50 px-4 py-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 font-semibold text-white">
