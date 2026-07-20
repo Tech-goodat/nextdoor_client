@@ -125,6 +125,7 @@ export default function CartPage() {
       if (!response.ok) throw new Error(data.error || "Clear failed.");
 
       setCart(data.cart);
+      
     } catch (error) {
       console.error(error);
       alert("Could not clear cart.");

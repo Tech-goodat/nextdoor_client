@@ -213,7 +213,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen w-full p-4 md:p-8">
       {/* Categories */}
       <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
         {categories.map((category) => (
@@ -236,9 +236,9 @@ const Home = () => {
         </div>
       ) : (
         <div className="flex w-full lg:grid lg:grid-cols-2 flex-col gap-5">
+  
           <div className="flex w-full flex-col gap-5">
-            <div className="flex w-full items-center justify-between">
-              <p className="text-xs items-center font-medium uppercase tracking-wide text-gray-600">
+             <div className="text-xs flex gap-3 ml-2 items-center font-medium uppercase tracking-wide text-gray-600">
                 Nearby businesses
              
               <Link
@@ -247,9 +247,10 @@ const Home = () => {
               >
                 View all <FaArrowRightLong size={15} />
               </Link>
-               </p>
-            </div>
+              </div>
+            
             {filteredBusinesses.map((business) => (
+              
               <div
                 key={business.id}
                 className="flex items-center justify-between rounded-3xl border border-gray-200 bg-white px-5 py-3 transition hover:shadow-md"
@@ -300,8 +301,8 @@ const Home = () => {
 
           <div className="flex flex-col items-center w-full gap-5">
             
-            <div className="space-y-5 mt-15 flex w-full flex-col sm:space-y-4">
-              <div className="flex w-full items-center justify-between ">
+            <div className="space-y-5 flex w-full flex-col sm:space-y-4">
+              <div className="flex w-full ml-2 gap-3 items-center ">
                 <p className="text-xs items-center font-medium uppercase tracking-wide text-gray-600">Products</p>
                 <Link
                   href="/my_business/all_products"
@@ -310,10 +311,11 @@ const Home = () => {
                   Explore <FaArrowRightLong size={15} />
                 </Link>
               </div>
+              
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-3xl border border-gray-200 p-4 sm:p-5 transition hover:shadow-sm"
+                  className="flex items-center justify-between rounded-3xl border border-gray-200 bg-white px-5 py-6 transition hover:shadow-md"
                 >
                   <div className="flex items-center gap-3 sm:gap-4">
                     <div className="hidden sm:flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-2xl">
@@ -352,8 +354,14 @@ const Home = () => {
 
       {/* Announcements */}
       <div className="mt-8 w-full rounded-3xl border border-gray-200 bg-white p-5">
-        <div className="mb-5 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-700">
+       
+
+        {announcements.length === 0 ? (
+         ""
+        ) : (
+          <div className="space-y-4">
+             <div className="mb-5 flex items-center justify-between">
+          <h3 className="text-md font-semibold text-gray-700">
             Recent Community Updates
           </h3>
 
@@ -365,13 +373,6 @@ const Home = () => {
             <FaArrowRightLong size={14} />
           </Link>
         </div>
-
-        {announcements.length === 0 ? (
-          <p className="py-6 text-center text-sm text-gray-500">
-            No announcements yet.
-          </p>
-        ) : (
-          <div className="space-y-4">
             {announcements.map((announcement) => (
               <div
                 key={announcement.id}
