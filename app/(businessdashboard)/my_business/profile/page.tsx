@@ -168,7 +168,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-4xl flex mx-auto px-6 ">
+    <div className="w-full flex mx-auto px-6 ">
       <form
         onSubmit={handleSubmit}
         className="flex w-full flex-col  p-8"
@@ -198,7 +198,7 @@ const Profile = () => {
             name="business_name"
             value={formData.business_name}
             onChange={handleChange}
-            className="w-full border rounded-xl text-xs px-4 py-2.5 outline-none border-gray-300 focus:ring-2 focus:ring-lime-400"
+            className="w-full border rounded-xl text-xs px-4 py-4 outline-none border-gray-300 focus:ring-2 focus:ring-lime-400"
           />
         </div>
 
@@ -212,7 +212,7 @@ const Profile = () => {
             name="business_type"
             value={formData.business_type}
             onChange={handleChange}
-            className="w-full border rounded-xl border-gray-300 px-4 py-2.5 text-xs outline-none focus:ring-1 focus:ring-orange-400"
+            className="w-full border rounded-xl border-gray-300 px-4 py-4 text-xs outline-none focus:ring-1 focus:ring-orange-400"
           >
             <option className="text-xs text-gray-600" value="">Select category</option>
             <option className="text-xs text-gray-600" value="Food">Food</option>
@@ -251,7 +251,7 @@ const Profile = () => {
               name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
-              className="w-full border text-xs rounded-xl px-4 py-2 outline-none focus:ring-1 border-gray-300 focus:ring-orange-400"
+              className="w-full border text-xs rounded-xl px-4 py-4 outline-none focus:ring-1 border-gray-300 focus:ring-orange-400"
             />
           </div>
 
@@ -265,7 +265,7 @@ const Profile = () => {
               name="shop_number"
               value={formData.shop_number}
               onChange={handleChange}
-              className="w-full border rounded-xl text-xs border-gray-300 px-4 py-2 outline-none focus:ring-1 focus:ring-orange-400"
+              className="w-full border rounded-xl text-xs border-gray-300 px-4 py-4 outline-none focus:ring-1 focus:ring-orange-400"
             />
           </div>
         </div>
@@ -283,7 +283,7 @@ const Profile = () => {
               value={formData.opens}
               onChange={handleChange}
               placeholder="8:00AM"
-              className="w-full border rounded-xl border-gray-300 text-xs px-4 py-2 outline-none focus:ring-1 focus:ring-orange-400"
+              className="w-full border rounded-xl border-gray-300 text-xs px-4 py-4 outline-none focus:ring-1 focus:ring-orange-400"
             />
           </div>
 
@@ -298,7 +298,7 @@ const Profile = () => {
               value={formData.closes}
               onChange={handleChange}
               placeholder="9:00PM"
-              className="w-full border text-xs border-gray-300 rounded-xl px-4 py-2 outline-none focus:ring-1 focus:ring-orange-400"
+              className="w-full border text-xs border-gray-300 rounded-xl px-4 py-4 outline-none focus:ring-1 focus:ring-orange-400"
             />
           </div>
         </div>

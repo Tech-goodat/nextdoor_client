@@ -136,10 +136,10 @@ setTimeout(() => {
 )}
 
   return (
-    <div className="min-h-screen p-4 sm:p-6">
+    <div className="min-h-screen flex w-full p-4 sm:p-6">
       {/* Products Exist */}
       {products.length > 0 ? (
-        <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
+        <div className="rounded-3xl border flex w-full flex-col border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
           {/* Section Header */}
           {/* Section Header */}
 <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
