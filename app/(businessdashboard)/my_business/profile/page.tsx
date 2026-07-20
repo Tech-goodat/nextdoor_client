@@ -168,7 +168,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="w-full flex mx-auto px-6 ">
+    <div className="w-full md:max-w-7xl flex mx-auto px-6 ">
       <form
         onSubmit={handleSubmit}
         className="flex w-full flex-col  p-8"
