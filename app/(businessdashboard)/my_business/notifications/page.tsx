@@ -79,13 +79,13 @@ const AnnouncementsPage = () => {
   return (
     <div className="min-h-screen w-full flex items-center flex-col px-4 py-8 md:px-10">
       {/* Header */}
-      <div className="mb-10">
+      <div className="mb-10 flex w-full ">
         <div className="flex items-center gap-3">
           <div className="rounded-2xl bg-orange-100 p-3">
             <Bell className="text-orange-500" size={26} />
           </div>
 
-          <div className="flex w-full flex-col">
+          <div className="flex  w-full flex-col">
             <h1 className="text-xl md:text-3xl font-bold text-gray-800">
               Community Announcements
             </h1>
