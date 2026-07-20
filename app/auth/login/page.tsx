@@ -51,7 +51,7 @@ const handleSubmit = async (
     localStorage.setItem("user", JSON.stringify(data.user));
 
     if (data.user?.business_name) {
-      router.push("/my_business/home");
+      router.push("/my_business/dashboard");
     } else {
       router.push("/client/home");
     }
@@ -92,7 +92,7 @@ const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
     localStorage.setItem("user", JSON.stringify(data.user));
 
     if (data.user?.business_name) {
-      router.push("/my_business/home");
+      router.push("/my_business/dashboard");
     } else {
       router.push("/client/home");
     }

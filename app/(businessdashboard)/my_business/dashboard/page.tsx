@@ -247,7 +247,7 @@ const BusinessDashboard = () => {
       {/* Quick actions */}
       <div className="mb-8 lg:flex grid grid-cols-2  gap-2 overflow-x-auto pb-2">
         <QuickAction
-          href="/my_business/add_product"
+          href="/my_business/create_product"
           label="Add product"
           icon={Plus}
         />
@@ -257,7 +257,7 @@ const BusinessDashboard = () => {
           icon={Megaphone}
         />
         <QuickAction
-          href="/my_business/edit"
+          href="/my_business/profile"
           label="Edit business profile"
           icon={Store}
         />
@@ -299,7 +299,7 @@ const BusinessDashboard = () => {
               Your products
             </h3>
             <Link
-              href="/my_business/all_products"
+              href="/my_business/products"
               className="flex items-center gap-2 text-xs text-gray-600 hover:text-orange-500"
             >
               View all
