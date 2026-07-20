@@ -292,11 +292,14 @@ export default function CartPage() {
                   </span>
                 </div>
                 <div className="mt-2 flex justify-end text-sm text-slate-500">
-                  <Link href='/my_business/checkout' className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 py-3 font-medium text-white transition hover:bg-orange-600">
-              Proceed to Checkout
-              <ArrowRight size={18} />
-            </Link>
-                </div>
+  <Link
+    href={`/my_business/checkout?business_id=${group.business_id}`}
+    className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 py-3 font-medium text-white transition hover:bg-orange-600"
+  >
+    Proceed to Checkout
+    <ArrowRight size={18} />
+  </Link>
+</div>
               </div>
             ))}
           </div>
