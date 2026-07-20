@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CheckCircle2 } from "lucide-react";
+
 import {
   Search,
   Plus,
@@ -24,6 +26,7 @@ interface Product {
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -81,7 +84,10 @@ export default function ProductsPage() {
       throw new Error(data.message || "Failed to add item.");
     }
 
-    alert("Added to cart!");
+    setShowSuccess(true);
+      setTimeout(() => {
+    setShowSuccess(false);
+  }, 3000);
   } catch (error) {
     console.error(error);
     alert("Could not add item.");
@@ -118,10 +124,10 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 p-4 sm:p-6">
+    <div className="min-h-screen w-full p-3 sm:p-6">
       {/* Products Exist */}
       {products.length > 0 ? (
-        <div className="rounded-3xl border border-gray-300 bg-white p-4 sm:p-6 shadow-sm">
+        <div className="rounded-3xl p-2 md:p-4 w-full border border-gray-300 bg-white shadow-sm">
           {/* Section Header */}
           <div className="mb-4 sm:mb-6 flex items-center gap-3">
             <div className="rounded-xl bg-orange-100 p-2 sm:p-3">
@@ -139,7 +145,7 @@ export default function ProductsPage() {
           </div>
 
           {/* Product List */}
-          <div className="space-y-3 flex flex-col lg:grid grid-cols-2 gap-5 sm:space-y-4">
+          <div className="space-y-3 flex w-full flex-col sm:flex md:flex md:flex-col lg:grid grid-cols-2 gap-5 sm:space-y-4">
             {products.map((product) => (
               <div
                 key={product.id}
@@ -215,6 +221,26 @@ export default function ProductsPage() {
           </Link>
         </div>
       )}
+
+      {showSuccess && (
+  <div className="fixed top-4 right-4 z-50 animate-bounce sm:top-6 sm:right-6">
+    <div className="flex max-w-sm items-start gap-3 rounded-2xl border border-orange-100 bg-white/90 backdrop-blur-md px-5 py-4 shadow-2xl">
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-orange-100 to-lime-100">
+        <CheckCircle2 size={22} className="text-lime-600" />
+      </div>
+
+      <div className="flex-1">
+        <h3 className="font-semibold text-gray-800">
+          Added to Cart 🎉
+        </h3>
+
+        <p className="mt-1 text-sm text-gray-600">
+          Item has been added to your cart successfully.
+        </p>
+      </div>
+    </div>
+  </div>
+)}
 
     </div>
   );

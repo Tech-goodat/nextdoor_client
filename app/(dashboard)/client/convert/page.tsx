@@ -78,8 +78,8 @@ const Convert = () => {
   
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-white via-orange-50 to-lime-50 px-4 py-8">
-      <div className="mx-auto w-full max-w-3xl">
+    <div className="min-h-screen w-full flex px-4 py-8">
+      <div className="mx-auto w-full max-w-4xl">
 
         <div className="rounded-3xl border border-white/50 bg-white/80 p-6 shadow-xl backdrop-blur-md sm:p-8">
           

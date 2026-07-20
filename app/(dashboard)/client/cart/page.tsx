@@ -125,6 +125,7 @@ export default function CartPage() {
       if (!response.ok) throw new Error(data.error || "Clear failed.");
 
       setCart(data.cart);
+      
     } catch (error) {
       console.error(error);
       alert("Could not clear cart.");
@@ -181,10 +182,10 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 p-4 sm:p-6">
-      <div className="grid gap-6 lg:grid-cols-3">
+    <div className="min-h-screen  items-center justify-center w-full p-4 sm:p-6">
+      <div className="flex w-full items-center gap-6">
         {/* Cart */}
-        <div className="lg:col-span-2 rounded-3xl border border-gray-300 bg-white p-6">
+        <div className="flex w-full flex-col rounded-3xl border border-gray-300 bg-white p-6">
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-orange-100 p-3">
@@ -192,7 +193,7 @@ export default function CartPage() {
               </div>
               <div>
                 <h2 className="font-semibold text-slate-800">
-                  <span className="text-lg text-orange-500">
+                  <span className="text-sm text-orange-500">
                     {cart.total_items}
                   </span>{" "}
                   ITEMS IN CART
@@ -205,7 +206,7 @@ export default function CartPage() {
 
             <button
               onClick={clearCart}
-              className="text-sm text-red-500 hover:text-red-600"
+              className="text-xs text-red-500 hover:text-red-600"
             >
               Clear Cart
             </button>
@@ -290,12 +291,18 @@ export default function CartPage() {
                     KSh {group.subtotal}
                   </span>
                 </div>
+                <div className="mt-2 flex justify-end text-sm text-slate-500">
+                  <Link href='/my_business/checkout' className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 py-3 font-medium text-white transition hover:bg-orange-600">
+              Proceed to Checkout
+              <ArrowRight size={18} />
+            </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Summary */}
+        {/* Summary 
         <div>
           <div className="sticky top-6 rounded-3xl border border-gray-300 bg-white p-6">
             <h2 className="mb-6 text-lg font-semibold text-slate-800">
@@ -320,6 +327,7 @@ export default function CartPage() {
             </button>
           </div>
         </div>
+        */}
       </div>
     </div>
   );
