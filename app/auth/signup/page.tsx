@@ -125,7 +125,7 @@ const Page = () => {
       )}
 
       <div className="flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-3xl">
           {/* Return Home */}
           <Link
             href="/"
@@ -136,7 +136,7 @@ const Page = () => {
           </Link>
 
           {/* Card */}
-          <div className="rounded-3xl border border-white/50 bg-white/80 p-6 shadow-xl backdrop-blur-md sm:p-8">
+          <div className="rounded-3xl  border border-white/50 bg-white/80 p-6 shadow-xl backdrop-blur-md sm:p-8">
             {/* Header */}
             <div>
               <h1 className="text-4xl font-bold text-gray-800 sm:text-5xl">

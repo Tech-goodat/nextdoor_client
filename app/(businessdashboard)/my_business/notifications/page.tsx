@@ -23,7 +23,7 @@ const AnnouncementsPage = () => {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          "https://nextdoor-server.onrender.com/announcement/",
+          "https://nextdoor-server.onrender.com/announcement/?limit=6",
           {
             headers: {
               Authorization: `Token ${token}`,

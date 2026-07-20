@@ -107,7 +107,7 @@ const handleGoogleLogin = async (credentialResponse: CredentialResponse) => {
   return (
     <div className="min-h-screen w-full bg-linear-to-br from-white via-orange-50 to-lime-50">
       <div className="flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-xl">
           <Link
             href="/"
             className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-800 transition-colors hover:text-orange-500"
