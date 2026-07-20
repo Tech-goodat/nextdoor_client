@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   ShoppingBag,
   Store,
@@ -45,8 +45,7 @@ const BASE_URL = "https://nextdoor-server.onrender.com";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const businessId = searchParams.get("business_id");
+  const [businessId, setBusinessId] = useState<string | null>(null);
 
   const [cart, setCart] = useState<Cart | null>(null);
   const [group, setGroup] = useState<BusinessGroup | null>(null);
@@ -61,7 +60,7 @@ export default function CheckoutPage() {
     Authorization: `Token ${localStorage.getItem("token")}`,
   });
 
-  const fetchCart = async () => {
+  const fetchCart = async (id: string | null) => {
     try {
       const response = await fetch(`${BASE_URL}/cart/`, {
         headers: authHeaders(),
@@ -71,7 +70,7 @@ export default function CheckoutPage() {
       setCart(data);
 
       const matched = data.businesses.find(
-        (b) => String(b.business_id) === businessId
+        (b) => String(b.business_id) === id
       );
       setGroup(matched ?? null);
     } catch (error) {
@@ -82,7 +81,10 @@ export default function CheckoutPage() {
   };
 
   useEffect(() => {
-    fetchCart();
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("business_id");
+    setBusinessId(id);
+    fetchCart(id);
     return () => {
       if (pollRef.current) clearInterval(pollRef.current);
     };
